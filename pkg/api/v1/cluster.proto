@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package pkg.api.v1;
+
+import "validate/validate.proto";
+
+
+message Cluster {
+
+  // define cluster load balance policy
+  enum LbPolicy {
+    ROUND_ROBIN = 0;
+    RANDOM = 3;
+  }
+
+  string name = 1 [(validate.rules).string = {min_bytes: 1}];
+  LbPolicy lb_policy = 2 [(validate.rules).enum = {defined_only: true}];
+
+}
+

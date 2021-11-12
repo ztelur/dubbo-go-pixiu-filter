@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package pkg.api.v1;
+
+// Return list of all clusters this proxy will load balance to.
+service ClusterDiscoveryService {
+  option (envoy.annotations.resource).type = "envoy.api.v2.Cluster";
+
+  rpc StreamClusters(stream DiscoveryRequest) returns (stream DiscoveryResponse) {
+  }
+
+  rpc DeltaClusters(stream DeltaDiscoveryRequest) returns (stream DeltaDiscoveryResponse) {
+  }
+
+  rpc FetchClusters(DiscoveryRequest) returns (DiscoveryResponse) {
+    option (google.api.http).post = "/v2/discovery:clusters";
+    option (google.api.http).body = "*";
+  }
+
+}
+
+
